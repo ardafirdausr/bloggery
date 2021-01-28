@@ -70,13 +70,6 @@ exports.resetPassword = [
 		.escape()
 		.notEmpty()
 		.withMessage('Reset Password Token must be provided'),
-	body('oldPassword')
-		.trim()
-		.escape()
-		.notEmpty()
-		.withMessage('Old password cannot be empty')
-		.isString()
-		.withMessage('Old password must be string'),
 	body('newPassword')
 		.trim()
 		.escape()

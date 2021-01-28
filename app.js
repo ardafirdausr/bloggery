@@ -7,7 +7,7 @@ const compression = require('compression');
 const cookieParser = require('cookie-parser');
 
 const mongo = require('./models');
-const appRouter = require('./routes');
+const apiRouter = require('./routes/api');
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(appRouter);
+app.use(apiRouter);
 
 mongo.connectDB();
 

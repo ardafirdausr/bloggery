@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const authController = require('../controllers/auth');
-const validator = require('../validators/auth');
-const requestValidator = require('../middlewares/requestValidator');
+const authController = require('../../controllers/auth');
+const validator = require('../../validators/auth');
+const requestValidator = require('../../middlewares/requestValidator');
 
 /**
- * POST /auth/register
+ * POST /api/auth/register
  * Register new user
  */
 router.post(
@@ -16,7 +16,7 @@ router.post(
 );
 
 /**
- * POST /auth/login
+ * POST /api/auth/login
  * Login user
  */
 router.post(
@@ -26,7 +26,7 @@ router.post(
 );
 
 /**
- * POST /auth/reset-password-request
+ * POST /api/auth/reset-password-request
  * Send reset password token
  */
 router.post(
@@ -36,7 +36,7 @@ router.post(
 );
 
 /**
- * POST /auth/reset-password
+ * POST /api/auth/reset-password
  * Reset password
  */
 router.post(

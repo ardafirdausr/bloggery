@@ -23,13 +23,12 @@ var templateEngineOptions = {
 	extName: '.hbs'
 }
 
-
 const transporter = nodemailer
 	.createTransport(transporterOptions)
 	.use('compile', hbs(templateEngineOptions));
 
-exports.sendResetPasswordMail = (user, token) => {
-	let resetPasswordUrl = `https://medium.sudah.online/reset-password?token=${token}`;
+exports.sendResetPasswordMail = async (user) => {
+	let resetPasswordUrl = `https://medium.sudah.online/reset-password?token=${user.resetPasswordToken}`;
 	return transporter.sendMail({
 		from: mailConfig.fromAddress,
 		to: user.email,

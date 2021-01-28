@@ -51,19 +51,14 @@ userSchema.virtual('photoUrl').get = function() {
 }
 
 userSchema.methods.comparePassword = async function(password) {
-	try {
-		return await bcrypt.compare(password, this.password);
-	} catch(err) {
-		return false;
-	}
+	return bcrypt.compare(password, this.password);
 }
 
 userSchema.methods.generateToken = function() {
 	return jwt.sign({
 		id: this._id,
 		email: this.email
-	}, jwtKey,
-	{
+	}, jwtKey, {
 		expiresIn: jwtExp
 	})
 }
@@ -71,18 +66,20 @@ userSchema.methods.generateToken = function() {
 userSchema.methods.updateResetPasswordToken = async function() {
 	const resetToken = crypto.randomBytes(20).toString('hex');
 	this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-	await this.save();
-	return this.resetPasswordToken;
+	await this.update();
+	return this;
+}
+
+userSchema.methods.updateHashPassword = async function() {
+	const salt = await bcrypt.genSalt(10);
+	this.password = await bcrypt.hash(this.password, salt);
 }
 
 userSchema.pre('save', async function(next) {
-	if (!this.isModified('password')) {
-		next();
-	} else {
-		const salt = await bcrypt.genSalt(10);
-		this.password = await bcrypt.hash(this.password, salt);
-    next();
+	if (this.isModified('password')) {
+		await this.updateHashPassword();
 	}
+	next();
 });
 
 userSchema.set('toJson', { virtuals: false });
