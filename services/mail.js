@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 
+const appConfig = require('../config/app');
 const mailConfig = require('../config/mail');
 const hbs = require("nodemailer-express-handlebars");
 
@@ -28,7 +29,7 @@ const transporter = nodemailer
 	.use('compile', hbs(templateEngineOptions));
 
 exports.sendResetPasswordMail = async (user) => {
-	let resetPasswordUrl = `https://medium.sudah.online/reset-password?token=${user.resetPasswordToken}`;
+	let resetPasswordUrl = `${appConfig.APP_URL}/reset-password?token=${user.resetPasswordToken}`;
 	return transporter.sendMail({
 		from: mailConfig.fromAddress,
 		to: user.email,

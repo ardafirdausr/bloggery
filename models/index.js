@@ -9,8 +9,8 @@ const models = [];
 
 const connectDB = () => mongoose.connect(mongoUri, {
 	useNewUrlParser: true,
-	useFindAndModify: false,
 	useCreateIndex: true,
+	useFindAndModify: false,
 	useUnifiedTopology: true
 }, err => {
 	if (err) {

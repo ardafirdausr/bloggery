@@ -46,12 +46,16 @@ const userSchema = new Schema({
 	toJSON: { getters: true, useProjection: true }
 });
 
-userSchema.virtual('photoUrl').get = function() {
+userSchema.path('photo').get = function() {
 	return this.photo ? `https://hostname.com/image/${this.photo}` : null;
 }
 
 userSchema.methods.comparePassword = async function(password) {
-	return bcrypt.compare(password, this.password);
+	try {
+		return bcrypt.compare(password, this.password);
+	} catch(err) {
+		return Promise.reject('Invalid Password');
+	}
 }
 
 userSchema.methods.generateToken = function() {
@@ -63,10 +67,9 @@ userSchema.methods.generateToken = function() {
 	})
 }
 
-userSchema.methods.updateResetPasswordToken = async function() {
+userSchema.methods.updateResetPasswordToken = function() {
 	const resetToken = crypto.randomBytes(20).toString('hex');
 	this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-	await this.update();
 	return this;
 }
 
@@ -81,8 +84,6 @@ userSchema.pre('save', async function(next) {
 	}
 	next();
 });
-
-userSchema.set('toJson', { virtuals: false });
 
 module.exports = model('User', userSchema)
 

@@ -20,7 +20,22 @@ router.get(
  * GET /users/:id
  * Get user profile
  */
-router.get('/:userId', userController.getUser);
+router.get(
+	'/:userId',
+	requestValidator(userValidator.getUser),
+	userController.getUser
+);
+
+/**
+ * PUT /users/profile/password
+ * Update user profile
+ */
+router.put(
+	'/profile/password',
+	isAuthenticated,
+	requestValidator(userValidator.updatePassword),
+	userController.updateUserPassword
+);
 
 /**
  * PUT /users/profile
@@ -29,7 +44,7 @@ router.get('/:userId', userController.getUser);
 router.put(
 	'/profile',
 	isAuthenticated,
-	requestValidator(userValidator.updateUserProfile),
+	requestValidator(userValidator.updateProfile),
 	userController.updateUserProfile
 );
 
