@@ -3,6 +3,7 @@ const router = express.Router();
 
 const requestValidator = require('../../middlewares/requestValidator');
 const isAuthenticated = require('../../middlewares/isAuthenticated');
+const formDataHandler = require('../../middlewares/formDataHandler');
 const userController = require('../../controllers/user');
 const userValidator = require('../../validators/user');
 
@@ -44,6 +45,7 @@ router.put(
 router.put(
 	'/profile',
 	isAuthenticated,
+	formDataHandler('image', 'user').single('photo'),
 	requestValidator(userValidator.updateProfile),
 	userController.updateUserProfile
 );

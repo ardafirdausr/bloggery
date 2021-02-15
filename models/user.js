@@ -46,10 +46,6 @@ const userSchema = new Schema({
 	toJSON: { getters: true, useProjection: true }
 });
 
-userSchema.path('photo').get = function() {
-	return this.photo ? `https://hostname.com/image/${this.photo}` : null;
-}
-
 userSchema.methods.comparePassword = async function(password) {
 	try {
 		return bcrypt.compare(password, this.password);
@@ -86,4 +82,3 @@ userSchema.pre('save', async function(next) {
 });
 
 module.exports = model('User', userSchema)
-

@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
+const hbs = require("nodemailer-express-handlebars");
 
 const appConfig = require('../config/app');
 const mailConfig = require('../config/mail');
-const hbs = require("nodemailer-express-handlebars");
 
 const transporterOptions = {
 	host: mailConfig.host,
@@ -18,7 +18,7 @@ var templateEngineOptions = {
 	viewEngine: {
 		extname: '.hbs',
 		layoutsDir: 'views/mail',
-		defaultLayout:  'simple',
+		defaultLayout: 'simple',
 	},
 	viewPath: './views/mail',
 	extName: '.hbs'

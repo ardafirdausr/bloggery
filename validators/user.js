@@ -11,6 +11,7 @@ exports.getUser = [
 
 exports.updateProfile = [
 	body('name')
+		.optional()
 		.trim()
 		.escape()
 		.notEmpty()
@@ -18,6 +19,7 @@ exports.updateProfile = [
 		.isString()
 		.withMessage('Name must be string'),
 	body('email')
+		.optional()
 		.normalizeEmail()
 		.isEmail()
 		.withMessage('Email must be valid email address')
@@ -28,6 +30,7 @@ exports.updateProfile = [
 			}
 		}),
 	body('bio')
+		.optional()
 		.trim()
 		.isString()
 		.withMessage('Bio must be string')

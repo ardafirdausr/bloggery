@@ -10,6 +10,7 @@ require('dotenv').config();
 
 const mongo = require('./models');
 const apiRouter = require('./routes/api');
+const appRouter = require('./routes');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(apiRouter);
+app.use(appRouter);
 
 mongo.connectDB();
 

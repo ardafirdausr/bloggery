@@ -1,7 +1,7 @@
-const { matchedDatam, matchedData } = require('express-validator');
-const mongoose = require('mongoose');
+const { matchedData } = require('express-validator');
 
 const { User } = require('../models');
+const { uploadImage } = require('../services/storage');
 
 exports.getUser = async (req, res, next) => {
 	try {
@@ -26,9 +26,14 @@ exports.getUserProfile = (req, res, next) => {
 exports.updateUserProfile = async (req, res, next) => {
 	try {
 		let userData = matchedData(req, { locations: ['body'] });
+		if (req.file != null) {
+			userData['photo'] = await uploadImage(req.file);
+		}
+
 		let user = await User.findOneAndUpdate({ _id: req.user.id }, { $set: userData }, { new: true });
 		return res.status(200).json({ message: 'Success', data: user.toJSON() });
 	} catch(err) {
+		console.log(err);
 		console.log(err.message);
 		return res.status(500).json({ message: 'Internal server error'});
 	}

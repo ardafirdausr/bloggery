@@ -15,13 +15,12 @@ const connectDB = () => mongoose.connect(mongoUri, {
 }, err => {
 	if (err) {
 		throw err;
-	} else {
-		console.log('Mongo DB connected!');
 	}
+
+	console.log('Mongo DB connected!');
 })
 
-fs
-  .readdirSync(__dirname)
+fs.readdirSync(__dirname)
   .filter(file => {
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
   })

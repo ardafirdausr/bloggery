@@ -20,7 +20,4 @@ const postSchema = new Schema({
 	toJSON: { getters: true, useProjection: true }
 });
 
-postSchema.set('toJson', { virtuals: false });
-
 module.exports = model('Post', postSchema)
-

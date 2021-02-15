@@ -55,7 +55,9 @@ exports.resetPassword = async (req, res, next) => {
 		if (!user) {
 			return res.status(400).json({ message: 'Invalid reset password token' });
 		}
-		await user.set('password', requestData.newPassword);
+
+		user.set('password', requestData.newPassword);
+		user.set('resetPasswordToken', null);
 		await user.save();
 		return res.status(200).json({ message: 'Success' });
 	} catch (err) {

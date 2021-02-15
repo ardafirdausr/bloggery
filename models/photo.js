@@ -5,7 +5,8 @@ const photoSchema = new Schema({
 		type: SchemaTypes.String
 	},
 	photo: {
-
+		type: SchemaTypes.String,
+		required: true,
 	},
 	user: {
 		type: SchemaTypes.ObjectId,
@@ -14,9 +15,5 @@ const photoSchema = new Schema({
 }, {
 	timestamps: true
 });
-
-photoSchema.path('photo').get = function() {
-	return this.photo ? `https://hostname.com/image/${this.photo}` : null;
-}
 
 module.exports = model('Photo', photoSchema);

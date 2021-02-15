@@ -8,7 +8,7 @@ exports.getAllPosts = (req, res, next) => {
 
 exports.getPost = async (req, res, next) => {
 	try {
-		let postId = req.params.postId;
+		let { postId } = matchedData(req, { locations: ['params'] });
 		let post = await Post.findOne({ _id: postId });
 		if (!post) {
 			return res.status(404).json({ message: 'Post not found' });
@@ -35,8 +35,12 @@ exports.createPost = async (req, res, next) => {
 exports.updatePost = async (req, res, next) => {
 	try {
 		let postData = matchedData(req, { locations: ['body'] });
-		let postId = req.params.postId;
+		let { postId } = matchedData(req, { locations: ['params'] });
 		let post = await Post.findOneAndUpdate({ _id: postId }, { $set: postData }, { new: true });
+		if (!post) {
+			return res.status(404).json({ message: 'Post not found' });
+		}
+
 		return res.status(201).json({ message: 'Success', data: post.toJSON() });
 	} catch(err) {
 		console.log(err.message);
