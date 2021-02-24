@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   projectId: process.env.GCS_PROJECT_ID || '',
   clientEmail: process.env.GCS_CLIENT_EMAIL || '',

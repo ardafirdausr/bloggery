@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
 	host: process.env.MAIL_HOST || 'smtp.gmail.com',
 	port: process.env.MAIL_PORT || 465,
