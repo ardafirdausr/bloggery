@@ -1,6 +1,6 @@
 const { Storage } = require('@google-cloud/storage')
 
-const gcpConfig = require('../config/gcp');
+const gcpConfig = require('../../config/gcp');
 
 const storage = new Storage({
 	projectId: gcpConfig.projectId,
@@ -14,9 +14,10 @@ const bucket = storage.bucket(gcpConfig.bucketName)
 
 exports.uploadImage = async (file, dir = '') => {
   try {
-    console.log(typeof dir);
-    dir = dir.replace(/\//g, '');
-    let destinationPath = `images/${dir}/${file.filename}`;
+    dir = dir.replace(/\/\s/g, '');
+    let destinationPath = dir.length
+      ? `images/${dir}/${file.filename}`
+      : `images/${file.filename}`;
     let blob = bucket.file(destinationPath)
     let uploadOptions = {
       destination: blob,

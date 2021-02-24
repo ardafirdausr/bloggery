@@ -8,9 +8,9 @@ const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
 
-const mongo = require('./models');
-const apiRouter = require('./routes/api');
-const appRouter = require('./routes');
+const mongo = require('./src/models');
+const apiRouter = require('./src/routes/api');
+const appRouter = require('./src/routes');
 
 const app = express();
 

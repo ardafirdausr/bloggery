@@ -27,13 +27,12 @@ exports.updateUserProfile = async (req, res, next) => {
 	try {
 		let userData = matchedData(req, { locations: ['body'] });
 		if (req.file != null) {
-			userData['photo'] = await uploadImage(req.file);
+			userData['photo'] = await uploadImage(req.file, 'user');
 		}
 
 		let user = await User.findOneAndUpdate({ _id: req.user.id }, { $set: userData }, { new: true });
 		return res.status(200).json({ message: 'Success', data: user.toJSON() });
 	} catch(err) {
-		console.log(err);
 		console.log(err.message);
 		return res.status(500).json({ message: 'Internal server error'});
 	}

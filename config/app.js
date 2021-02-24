@@ -1,3 +1,4 @@
 module.exports = {
-	APP_URL: process.env.URL || 'localhost:3000',
+	appUrl: process.env.URL || 'localhost:3000',
+	appHost: process.env.HOST || 'localhost',
 }
