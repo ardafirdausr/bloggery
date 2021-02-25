@@ -63,10 +63,10 @@ userSchema.methods.generateToken = function() {
 	})
 }
 
-userSchema.methods.updateResetPasswordToken = function() {
+userSchema.statics.generateResetPasswordToken = function() {
 	const resetToken = crypto.randomBytes(20).toString('hex');
-	this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-	return this;
+	const token = crypto.createHash('sha256').update(resetToken).digest('hex');
+	return token;
 }
 
 userSchema.methods.updateHashPassword = async function() {

@@ -39,7 +39,8 @@ exports.resetPasswordRequest = async (req, res, next) => {
 		if (!user) {
 			return res.status(400).json({ message: 'Email is not registered yet' });
 		}
-		await user.updateResetPasswordToken().save();
+		user.resetPasswordToken = User.generateResetPasswordToken();
+		await user.save();
 		await mailService.sendResetPasswordMail(user);
 		return res.status(200).json({ message: 'Success' });
 	} catch(err) {

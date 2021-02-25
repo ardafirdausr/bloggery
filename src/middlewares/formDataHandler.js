@@ -17,7 +17,7 @@ const imageFilter = (req, file, cb) => {
 
 const imageLimit = { fieldSize: 5 * 1024 * 1024 }
 
-module.exports = (type, dir) => {
+module.exports = (type) => {
 	if (type === 'image') {
 		return multer({
 			storage,

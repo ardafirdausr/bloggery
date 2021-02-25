@@ -45,7 +45,7 @@ router.put(
 router.put(
 	'/profile',
 	isAuthenticated,
-	formDataHandler('image', 'user').single('photo'),
+	formDataHandler('image').single('photo'),
 	requestValidator(userValidator.updateProfile),
 	userController.updateUserProfile
 );

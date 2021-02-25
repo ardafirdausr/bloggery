@@ -12,18 +12,12 @@ const storage = new Storage({
 
 const bucket = storage.bucket(gcpConfig.bucketName)
 
-exports.uploadImage = async (file, dir = '') => {
+exports.uploadImage = async (file, dir = "") => {
   try {
-    dir = dir.replace(/\/\s/g, '');
-    let destinationPath = dir.length
-      ? `images/${dir}/${file.filename}`
-      : `images/${file.filename}`;
+    dir = dir.replace(/\W/g, '');
+    let destinationPath = ["image", dir, file.filename].filter(isValid => isValid).join('/');
     let blob = bucket.file(destinationPath)
-    let uploadOptions = {
-      destination: blob,
-      public: true,
-      gzip: true
-    }
+    let uploadOptions = { destination: blob, public: true, gzip: true }
     let uploadedFile = await bucket.upload(file.path, uploadOptions);
     return uploadedFile[0].publicUrl();
   } catch(err) {
